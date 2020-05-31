@@ -34,11 +34,13 @@ public class ClasseMain {
 			Create.menuCreate();// 90% pronto
 			break;
 		case 2:
-			Read.readMenu();
+			Read.readMenu(); // 40% pronto. Funcional até 2ª opcao
 			break;
 		case 3:
+			Update.updateMenu(); // em progresso
 			break;
 		case 4:
+			Delete.deleteMenu(); //TODO
 			break;
 		}
 	}

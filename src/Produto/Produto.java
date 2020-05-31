@@ -4,17 +4,28 @@ import java.util.Date;
 
 public class Produto {
 
-	public Produto() {
-		Date now = new Date();
+	public Produto(Date now) {
 		DataCadastro = new java.sql.Date(now.getTime());
 		DataVencimento = new java.sql.Date(now.getTime());
 	}
+	public Produto() {
+		
+	}
 
+	private int idProduto;
 	private String nomeProduto;
 	private String descricao;
 	private Date DataCadastro;
 	private Date DataVencimento;
 	private double ValorCompra;
+
+	public int getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(int idProduto) {
+		this.idProduto = idProduto;
+	}
 
 	public String getNomeProduto() {
 		return nomeProduto;
@@ -51,12 +62,15 @@ public class Produto {
 	public double getValorCompra() {
 		return ValorCompra;
 	}
-
+	
 	public void setValorCompra(double valorCompra) {
-		ValorCompra = valorCompra;
+		this.ValorCompra = valorCompra;
 	}
-
-	public void listar() {
-		System.out.println(Produto.class.getDeclaredFields());
+	
+	@Override
+	public String toString() {
+		return "Produto [idProduto=" + idProduto + ", nomeProduto=" + nomeProduto + ", descricao=" + descricao
+				+ ", DataCadastro=" + DataCadastro + ", DataVencimento=" + DataVencimento + ", ValorCompra="
+				+ ValorCompra + "]";
 	}
 }

@@ -9,17 +9,17 @@ import java.util.List;
 
 import ConexaoBD.ConnectionFactory;
 import MetodosGerais.MetodosDeApoio;
+import Produto.Produto;
 
 public class Read {
 	public static void readMenu() {
-		System.out.println("\nGostaria de selecionar registros do banco?\n");
+		System.out.println("\nComo você deseja selecionar registros do banco?\n");
 		listarOpcoes();
 		int resposta = MetodosDeApoio.obterInputTratado(1, obterItensMenu().size());
 		irParaOpcaoSelecionada(resposta);
 	}
 
 	public static void listarOpcoes() {
-
 		MetodosDeApoio.listarMenu(obterItensMenu());
 	}
 
@@ -33,9 +33,10 @@ public class Read {
 	public static void irParaOpcaoSelecionada(int resposta) {// TODO
 		switch (resposta) {
 		case 1:
-			simpleSelectQuery("aa");
+			select(null, -1);
 			break;
 		case 2:
+			select(null, 2);
 			break;
 		case 3:
 			break;
@@ -51,19 +52,43 @@ public class Read {
 		}
 	}
 
-	public static void simpleSelectQuery(String query) { // TODO
+	public static void select(int[] opcoesDesejadas, int limiteSolicitado) { // TODO
+			gerarListaDeProduto(opcoesDesejadas, limiteSolicitado);
+	}
+
+	public static List<Produto> gerarListaDeProduto(int[] opcoesDesejadas, int limiteSolicitado) {
+		String selectQuery = montarQuerySelect(limiteSolicitado);
+
+		List<Produto> listaDeProduto = null;
 		try {
-			Connection con = ConnectionFactory.getConnection();
-			String selectQuery = "Select * from produto";
-			PreparedStatement statement = con.prepareStatement(selectQuery);
-			ResultSet rs = statement.executeQuery();
+		Connection con = ConnectionFactory.getConnection();
+		PreparedStatement statement = con.prepareStatement(selectQuery);
+
+		ResultSet rs = statement.executeQuery();
+
+		Produto produto = null;
+
 			while (rs.next()) {
-				String nome = rs.getString("nome_produto");
-				System.out.println(nome);
+				produto.setIdProduto(rs.getInt("id_produto"));
+				produto.setNomeProduto(rs.getString("nome_produto"));
+				produto.setDescricao(rs.getString("descricao"));
+				produto.setDataCadastro(rs.getDate("data_cadastro"));
+				produto.setDataVencimento(rs.getDate("data_vencimento"));
+				produto.setValorCompra(rs.getDouble("valor_compra"));
+				listaDeProduto.add(produto);
 			}
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return listaDeProduto;
+	}
+
+	public static String montarQuerySelect(int limite) {
+		String queryInicial = "Select * from produto";
+		String complementoLimit = String.format(" LIMIT %d", limite);
+		queryInicial = limite >= 0 ? queryInicial + complementoLimit : queryInicial;
+
+		return queryInicial;
 	}
 }
