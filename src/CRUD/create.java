@@ -54,6 +54,7 @@ public class Create {
 			statement.setDouble(5, produto.getValorCompra());
 			statement.executeUpdate();
 			con.close();
+			System.out.println("Valores inseridos com sucesso");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

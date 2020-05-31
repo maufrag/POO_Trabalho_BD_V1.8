@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,17 +57,18 @@ public class Read {
 			gerarListaDeProduto(opcoesDesejadas, limiteSolicitado);
 	}
 
+
 	public static List<Produto> gerarListaDeProduto(int[] opcoesDesejadas, int limiteSolicitado) {
 		String selectQuery = montarQuerySelect(limiteSolicitado);
 
-		List<Produto> listaDeProduto = null;
+		List<Produto> listaDeProduto = new ArrayList<Produto>();
 		try {
 		Connection con = ConnectionFactory.getConnection();
 		PreparedStatement statement = con.prepareStatement(selectQuery);
 
 		ResultSet rs = statement.executeQuery();
 
-		Produto produto = null;
+		Produto produto = new Produto();
 
 			while (rs.next()) {
 				produto.setIdProduto(rs.getInt("id_produto"));
@@ -76,6 +78,8 @@ public class Read {
 				produto.setDataVencimento(rs.getDate("data_vencimento"));
 				produto.setValorCompra(rs.getDouble("valor_compra"));
 				listaDeProduto.add(produto);
+				produto.toString();
+				System.out.println(produto.toString());
 			}
 			con.close();
 		} catch (SQLException e) {

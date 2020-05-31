@@ -8,9 +8,7 @@ public class Produto {
 		DataCadastro = new java.sql.Date(now.getTime());
 		DataVencimento = new java.sql.Date(now.getTime());
 	}
-	public Produto() {
-		
-	}
+	public Produto() {}
 
 	private int idProduto;
 	private String nomeProduto;
