@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import Produto.Produto;
-import main.*;
 import ConexaoBD.ConnectionFactory;
+import MetodosGerais.*;
 
-public class create {
+public class Create {
 
 	public static void menuCreate() {
 		System.out.println("Gostaria de cadastrar um produto?(s/n)");
-		char resposta = arquivoMain.obterInputTratado('s', 'n');
+		char resposta = MetodosDeApoio.obterInputTratado('s', 'n');
 		if (resposta == 's') {
 			Scanner scan = new Scanner(System.in);
 			Produto produto = new Produto();
@@ -26,8 +26,7 @@ public class create {
 
 			System.out.println("Informe o valor de compra:");
 			produto.setValorCompra(scan.nextDouble());
-			
-			
+
 			insertInto(produto);
 			/*
 			 * System.out.println("Data de vencimento: (deixar vazio caso nao possua)");
@@ -37,14 +36,15 @@ public class create {
 			 * // TODO Auto-generated catch block e.printStackTrace(); }
 			 * produto.setDataVencimento(date);
 			 */
-			
+
 		}
 	}
 
 	public static void insertInto(Produto produto) {
 		try {
 			Connection con = ConnectionFactory.getConnection();
-			String insertQuery = String.format("insert into produto(nome_produto, descricao, data_cadastro, data_vencimento, valor_compra) values (?, ?, ?, ?, ?)");
+			String insertQuery = String.format(
+					"insert into produto(nome_produto, descricao, data_cadastro, data_vencimento, valor_compra) values (?, ?, ?, ?, ?)");
 			PreparedStatement statement = con.prepareStatement(insertQuery);
 			statement.setString(1, produto.getNomeProduto());
 			statement.setString(2, produto.getDescricao());

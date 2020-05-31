@@ -3,13 +3,13 @@ package Produto;
 import java.util.Date;
 
 public class Produto {
-	
+
 	public Produto() {
 		Date now = new Date();
 		DataCadastro = new java.sql.Date(now.getTime());
 		DataVencimento = new java.sql.Date(now.getTime());
 	}
-	
+
 	private String nomeProduto;
 	private String descricao;
 	private Date DataCadastro;
@@ -55,7 +55,7 @@ public class Produto {
 	public void setValorCompra(double valorCompra) {
 		ValorCompra = valorCompra;
 	}
-	
+
 	public void listar() {
 		System.out.println(Produto.class.getDeclaredFields());
 	}
