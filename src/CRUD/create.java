@@ -3,6 +3,7 @@ package CRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Scanner;
 
 import Produto.Produto;
@@ -16,7 +17,7 @@ public class Create {
 		char resposta = MetodosDeApoio.obterInputTratado('s', 'n');
 		if (resposta == 's') {
 			Scanner scan = new Scanner(System.in);
-			Produto produto = new Produto();
+			Produto produto = new Produto(new Date());
 
 			System.out.println("Informe o nome do produto:");
 			produto.setNomeProduto(scan.nextLine());
