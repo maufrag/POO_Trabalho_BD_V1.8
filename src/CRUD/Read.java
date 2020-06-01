@@ -30,7 +30,7 @@ public class Read {
 		return Arrays.asList("Selecionar todos os registros.", "Selecionar uma quantidade limitada de registros.");
 	}
 
-	public static void irParaOpcaoSelecionada(int resposta, int quantidadeMaxima) {// TODO
+	public static void irParaOpcaoSelecionada(int resposta, int quantidadeMaxima) {
 		switch (resposta) {
 		case 1:
 			select(-1);
@@ -41,7 +41,7 @@ public class Read {
 		}
 	}
 
-	public static void select(int limiteSolicitado) { // TODO
+	public static void select(int limiteSolicitado) {
 		gerarListaDeProduto(limiteSolicitado);
 	}
 

@@ -37,7 +37,7 @@ public class MetodosDeApoio {
 			}
 
 		} while (!valido);
-
+		scan.close();
 		return valorFinal;
 	}
 
@@ -79,6 +79,7 @@ public class MetodosDeApoio {
 				System.out.println("Por favor insira um valor correto.");
 			}
 		} while (!valido);
+		scan.close();
 		return valorFinal;
 	}
 
