@@ -17,9 +17,14 @@ public class Read {
 		System.out.println("\nComo você deseja selecionar registros do banco?\n");
 		listarOpcoes();
 		int resposta = MetodosDeApoio.obterInputTratado(1, obterItensMenu().size());
-		int quantidadeMaxima = resposta == 2 ? MetodosDeApoio.obterInputTratado(1, 1000) : 0;
+		int quantidadeMaxima = 0;
+		if (resposta == 2) {
+			System.out.println("Informe a quantidade maxima de registros que deseja obter");
+			quantidadeMaxima = MetodosDeApoio.obterInputTratado(1, 9000);
+		}
+
+		System.out.println("Gerando resultado...\n");
 		irParaOpcaoSelecionada(resposta, quantidadeMaxima);
-		System.out.println("Gerando resultando...");
 	}
 
 	public static void listarOpcoes() {

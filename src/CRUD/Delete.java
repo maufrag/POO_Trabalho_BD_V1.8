@@ -15,7 +15,7 @@ public class Delete {
 
 			Read.gerarListaDeProduto(-1);
 
-			System.out.println("\nSelecione o IdProduto do registro que deseja deletar");
+			System.out.println("Selecione o IdProduto do registro que deseja deletar");
 			int idProdutoSelecionado = MetodosDeApoio.obterInputTratado(1, 999999999);
 
 			System.out.println("Tem certeza que deseja excluir o produto?(s/n)");

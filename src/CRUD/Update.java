@@ -22,7 +22,7 @@ public class Update {
 
 			List<Produto> listaDeProduto = Read.gerarListaDeProduto(-1);
 
-			System.out.println("\nSelecione o IdProduto do registro que deseja alterar");
+			System.out.println("Selecione o IdProduto do registro que deseja alterar");
 			int idProdutoSelecionado = MetodosDeApoio.obterInputTratado(1, 999999999);
 
 			Produto produtoSelecionado = null;
@@ -60,33 +60,34 @@ public class Update {
 					}
 					index++;
 				}
-
+				Scanner scan = new Scanner(System.in);
 				if (campoSelecionado == 1) {
-					System.out.println("Não é possível alterar o idProduto de um produto");
-				} else {
+					System.out.println("Não é possível alterar o idProduto de um produto\n");
+
+				} else if (nomeCampo.contains("data")) {
+					System.out.println("Infelizmente ainda não estamos atualizando datas.\nTecle Enter para continuar.\n");
+					scan.nextLine();
+				}
+				else {
 					System.out.println("Campo selecionado: " + nomeCampo);
 
 					System.out.println("Informe o novo valor do campo " + nomeCampo);
 
-					Scanner scan = new Scanner(System.in);
-
-					System.out.println("\nExecutando o update...");
-					if (nomeCampo.contains("data")) {
-
-						System.out.println("Infelizmente ainda não estamos atualizando datas.");
-
-					} else if (nomeCampo.equals("valorCompra")) {
+					if (nomeCampo.equals("valorCompra")) {
 
 						Double novoValor = scan.nextDouble();
+						System.out.println("\nExecutando o update...");
 						update(idProdutoSelecionado, nomeCampo, novoValor);
 
 					} else {
-
 						String novoValor = scan.nextLine();
+						System.out.println("\nExecutando o update...");
 						update(idProdutoSelecionado, nomeCampo, novoValor);
 					}
-					
+
 				}
+			} else {
+				System.out.println("Não foi encontrado nenhum produto com o id escolhido.\n");
 			}
 		}
 	}

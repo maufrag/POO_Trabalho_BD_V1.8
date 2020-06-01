@@ -39,7 +39,7 @@ public class Create {
 		try {
 			Connection con = ConnectionFactory.getConnection();
 			String insertQuery = String.format(
-					"insert into produto(nome_produto, descricao, data_cadastro, data_vencimento, valor_compra) values (?, ?, ?, ?, ?)");
+					"insert into produto(nomeProduto, descricao, dataCadastro, dataVencimento, valorCompra) values (?, ?, ?, ?, ?)");
 			PreparedStatement statement = con.prepareStatement(insertQuery);
 			statement.setString(1, produto.getNomeProduto());
 			statement.setString(2, produto.getDescricao());
@@ -48,7 +48,7 @@ public class Create {
 			statement.setDouble(5, produto.getValorCompra());
 			statement.execute();
 			con.close();
-			System.out.println("Valores inseridos com sucesso");
+			System.out.println("\nValores inseridos com sucesso.\n\n");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
