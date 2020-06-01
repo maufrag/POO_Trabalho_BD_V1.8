@@ -27,17 +27,11 @@ public class Create {
 
 			System.out.println("Informe o valor de compra:");
 			produto.setValorCompra(scan.nextDouble());
-
+			
+			System.out.println("Inserindo dados na tabela...");
+			
 			insertInto(produto);
-			/*
-			 * System.out.println("Data de vencimento: (deixar vazio caso nao possua)");
-			 * Calendar calendar = new GregorianCalendar(); String dateTexto =
-			 * scan.nextLine(); Date date = null; try { date = new
-			 * SimpleDateFormat("yyyy-dd-mm").parse(dateTexto); } catch (ParseException e) {
-			 * // TODO Auto-generated catch block e.printStackTrace(); }
-			 * produto.setDataVencimento(date);
-			 */
-
+			scan.close();
 		}
 	}
 
@@ -52,7 +46,7 @@ public class Create {
 			statement.setDate(3, (java.sql.Date) produto.getDataCadastro());
 			statement.setDate(4, (java.sql.Date) produto.getDataVencimento());
 			statement.setDouble(5, produto.getValorCompra());
-			statement.executeUpdate();
+			statement.execute();
 			con.close();
 			System.out.println("Valores inseridos com sucesso");
 		} catch (SQLException e) {

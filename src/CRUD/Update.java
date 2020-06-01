@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
+
 import ConexaoBD.ConnectionFactory;
 import MetodosGerais.MetodosDeApoio;
 import Produto.Produto;
@@ -12,51 +14,117 @@ import Produto.Produto;
 public class Update {
 	public static void updateMenu() {
 		System.out.println("Deseja atualizar arquivos do banco?(s/n)");
+
 		char resposta = MetodosDeApoio.obterInputTratado('s', 'n');
+
 		if (resposta == 's') {
-			System.out.println("Gerando lista de registros no banco...");
+			System.out.println("Gerando lista de registros no banco...\n");
 
-			List<Produto> listaDeProduto = Read.gerarListaDeProduto(null, -1);
+			List<Produto> listaDeProduto = Read.gerarListaDeProduto(-1);
 
-			for (Produto produto : listaDeProduto) {
-				produto.toString();
-				System.out.println();
-			}
-
-			Produto produto = new Produto();
-			System.out.println("Selecione o IdProduto do registro que deseja alterar\n");
+			System.out.println("\nSelecione o IdProduto do registro que deseja alterar");
 			int idProdutoSelecionado = MetodosDeApoio.obterInputTratado(1, 999999999);
-			
-			
-			
-			int index = 1;
-			Field[] listaAtributosObj = produto.getClass().getDeclaredFields();
-			
-			for (Field atributo : listaAtributosObj) {
-				System.out.println(index + " - " + atributo.getName());
-				index++;
-			}
-			
-			System.out.println("Selecione o campo que deseja alterar:");
-			int campoSelecionado = MetodosDeApoio.obterInputTratado(1, listaAtributosObj.length);
-			
-			
-			
-			//Read.select(null, -1);
 
+			Produto produtoSelecionado = null;
+
+			for (Produto elemento : listaDeProduto) {
+				if (elemento.getIdProduto() == idProdutoSelecionado) {
+					produtoSelecionado = elemento;
+					break;
+				}
+			}
+
+			if (produtoSelecionado != null) {
+
+				Produto produto = new Produto();
+				System.out.println("Produto selecionado: " + produtoSelecionado.getNomeProduto());
+
+				int index = 1;
+				Field[] listaAtributosObj = produto.getClass().getDeclaredFields();
+
+				for (Field atributo : listaAtributosObj) {
+					System.out.println(index + " - " + atributo.getName());
+					index++;
+				}
+
+				System.out.println("Selecione o campo que deseja alterar:");
+				int campoSelecionado = MetodosDeApoio.obterInputTratado(1, listaAtributosObj.length);
+
+				String nomeCampo = null;
+				index = 1;
+
+				for (Field campo : listaAtributosObj) {
+					if (index == campoSelecionado) {
+						nomeCampo = campo.getName();
+						break;
+					}
+					index++;
+				}
+
+				if (campoSelecionado == 1) {
+					System.out.println("Não é possível alterar o idProduto de um produto");
+				} else {
+					System.out.println("Campo selecionado: " + nomeCampo);
+
+					System.out.println("Informe o novo valor do campo " + nomeCampo);
+
+					Scanner scan = new Scanner(System.in);
+
+					System.out.println("\nExecutando o update...");
+					if (nomeCampo.contains("data")) {
+
+						System.out.println("Infelizmente ainda não estamos atualizando datas.");
+
+					} else if (nomeCampo.equals("valorCompra")) {
+
+						Double novoValor = scan.nextDouble();
+						update(idProdutoSelecionado, nomeCampo, novoValor);
+
+					} else {
+
+						String novoValor = scan.nextLine();
+						update(idProdutoSelecionado, nomeCampo, novoValor);
+					}
+					scan.close();
+				}
+			}
 		}
 	}
 
-	public static void update(int idProduto, Produto produtoOriginal, Produto novoProduto) {
+	public static void update(int idProduto, String nomeCampo, String novoValor) {
 		try {
 			Connection con = ConnectionFactory.getConnection();
-			String query = String.format("Update produto set ? = ? where id_produto = %d", idProduto);
+
+			String query = String.format("Update produto set %s = ? where id_produto = ?", nomeCampo);
+
 			PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, novoValor);
+			statement.setInt(2, idProduto);
+
+			statement.executeUpdate();
+
+			System.out.println("Valores atualizados com sucesso.");
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void update(int idProduto, String nomeCampo, Double novoValor) {
+		try {
+			Connection con = ConnectionFactory.getConnection();
+
+			String query = String.format("Update produto set %s = ? where id_produto = ?", nomeCampo);
+
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setDouble(1, novoValor);
+			statement.setInt(2, idProduto);
+
+			statement.executeUpdate();
 
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

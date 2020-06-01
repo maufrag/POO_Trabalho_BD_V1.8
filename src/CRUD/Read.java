@@ -17,7 +17,9 @@ public class Read {
 		System.out.println("\nComo você deseja selecionar registros do banco?\n");
 		listarOpcoes();
 		int resposta = MetodosDeApoio.obterInputTratado(1, obterItensMenu().size());
-		irParaOpcaoSelecionada(resposta);
+		int quantidadeMaxima = resposta == 2 ? MetodosDeApoio.obterInputTratado(1, 1000) : 0;
+		irParaOpcaoSelecionada(resposta, quantidadeMaxima);
+		System.out.println("Gerando resultando...");
 	}
 
 	public static void listarOpcoes() {
@@ -25,63 +27,47 @@ public class Read {
 	}
 
 	public static List<String> obterItensMenu() {
-		return Arrays.asList("Selecionar todos os registros.", "Selecionar uma quantidade limitada de registros.",
-				"Selecionar um registro especifico", "Selecionar elementos especificos de todos os registros",
-				"Selecionar elementos especificos de uma quantidade limitada de registros",
-				"Selecionar elementos especificos de um registro especifico");
+		return Arrays.asList("Selecionar todos os registros.", "Selecionar uma quantidade limitada de registros.");
 	}
 
-	public static void irParaOpcaoSelecionada(int resposta) {// TODO
+	public static void irParaOpcaoSelecionada(int resposta, int quantidadeMaxima) {// TODO
 		switch (resposta) {
 		case 1:
-			select(null, -1);
+			select(-1);
 			break;
 		case 2:
-			select(null, 2);
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		default:
-			System.out.println("Como vim parar aqui?");
+			select(quantidadeMaxima);
 			break;
 		}
 	}
 
-	public static void select(int[] opcoesDesejadas, int limiteSolicitado) { // TODO
-			gerarListaDeProduto(opcoesDesejadas, limiteSolicitado);
+	public static void select(int limiteSolicitado) { // TODO
+		gerarListaDeProduto(limiteSolicitado);
 	}
 
-
-	public static List<Produto> gerarListaDeProduto(int[] opcoesDesejadas, int limiteSolicitado) {
+	public static List<Produto> gerarListaDeProduto(int limiteSolicitado) {
 		String selectQuery = montarQuerySelect(limiteSolicitado);
 
 		List<Produto> listaDeProduto = new ArrayList<Produto>();
 		try {
-		Connection con = ConnectionFactory.getConnection();
-		PreparedStatement statement = con.prepareStatement(selectQuery);
+			Connection con = ConnectionFactory.getConnection();
+			PreparedStatement statement = con.prepareStatement(selectQuery);
 
-		ResultSet rs = statement.executeQuery();
-
-		Produto produto = new Produto();
+			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
-				produto.setIdProduto(rs.getInt("id_produto"));
-				produto.setNomeProduto(rs.getString("nome_produto"));
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("id_Produto"));
+				produto.setNomeProduto(rs.getString("nomeProduto"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setDataCadastro(rs.getDate("data_cadastro"));
-				produto.setDataVencimento(rs.getDate("data_vencimento"));
-				produto.setValorCompra(rs.getDouble("valor_compra"));
+				produto.setDataCadastro(rs.getDate("dataCadastro"));
+				produto.setDataVencimento(rs.getDate("dataVencimento"));
+				produto.setValorCompra(rs.getDouble("valorCompra"));
 				listaDeProduto.add(produto);
-				produto.toString();
 				System.out.println(produto.toString());
 			}
 			con.close();
+			System.out.println("\nResultados gerados com sucesso!\n");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

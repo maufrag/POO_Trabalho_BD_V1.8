@@ -31,16 +31,16 @@ public class ClasseMain {
 	public static void irParaOpcaoSelecionada(int numeroOpcao) {
 		switch (numeroOpcao) {
 		case 1:
-			Create.menuCreate();// 90% pronto
+			Create.menuCreate();
 			break;
 		case 2:
-			Read.readMenu(); // 40% pronto. Funcional até 2ª opcao
+			Read.readMenu();
 			break;
 		case 3:
-			Update.updateMenu(); // em progresso
+			Update.updateMenu();
 			break;
 		case 4:
-			Delete.deleteMenu(); //TODO
+			Delete.deleteMenu();
 			break;
 		}
 	}

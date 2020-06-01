@@ -5,17 +5,17 @@ import java.util.Date;
 public class Produto {
 
 	public Produto(Date now) {
-		DataCadastro = new java.sql.Date(now.getTime());
-		DataVencimento = new java.sql.Date(now.getTime());
+		dataCadastro = new java.sql.Date(now.getTime());
+		dataVencimento = new java.sql.Date(now.getTime());
 	}
 	public Produto() {}
 
 	private int idProduto;
 	private String nomeProduto;
 	private String descricao;
-	private Date DataCadastro;
-	private Date DataVencimento;
-	private double ValorCompra;
+	private Date dataCadastro;
+	private Date dataVencimento;
+	private double valorCompra;
 
 	public int getIdProduto() {
 		return idProduto;
@@ -42,33 +42,33 @@ public class Produto {
 	}
 
 	public Date getDataCadastro() {
-		return DataCadastro;
+		return dataCadastro;
 	}
 
 	public void setDataCadastro(Date dataCadastro) {
-		DataCadastro = dataCadastro;
+		this.dataCadastro = dataCadastro;
 	}
 
 	public Date getDataVencimento() {
-		return DataVencimento;
+		return dataVencimento;
 	}
 
 	public void setDataVencimento(Date dataVencimento) {
-		DataVencimento = dataVencimento;
+		this.dataVencimento = dataVencimento;
 	}
 
 	public double getValorCompra() {
-		return ValorCompra;
+		return valorCompra;
 	}
 	
 	public void setValorCompra(double valorCompra) {
-		this.ValorCompra = valorCompra;
+		this.valorCompra = valorCompra;
 	}
 	
 	@Override
 	public String toString() {
 		return "Produto [idProduto=" + idProduto + ", nomeProduto=" + nomeProduto + ", descricao=" + descricao
-				+ ", DataCadastro=" + DataCadastro + ", DataVencimento=" + DataVencimento + ", ValorCompra="
-				+ ValorCompra + "]";
+				+ ", DataCadastro=" + dataCadastro + ", DataVencimento=" + dataVencimento + ", ValorCompra="
+				+ valorCompra + "]";
 	}
 }
