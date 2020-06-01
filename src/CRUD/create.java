@@ -31,7 +31,7 @@ public class Create {
 			System.out.println("Inserindo dados na tabela...");
 			
 			insertInto(produto);
-			scan.close();
+			
 		}
 	}
 

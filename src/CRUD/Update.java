@@ -85,7 +85,7 @@ public class Update {
 						String novoValor = scan.nextLine();
 						update(idProdutoSelecionado, nomeCampo, novoValor);
 					}
-					scan.close();
+					
 				}
 			}
 		}
